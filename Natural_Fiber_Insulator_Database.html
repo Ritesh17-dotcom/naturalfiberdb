@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural-Fiber Insulator Literature Database</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --primary-color: #166534; /* Deep green */
+            --primary-hover: #14532d;
+            --accent-color: #9a3412; /* Terracotta */
+            --border-color: #e2e8f0;
+            --muted-bg: #f1f5f9;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --danger-bg: #fee2e2;
+            --danger-text: #991b1b;
+            --warning-bg: #fef3c7;
+            --warning-text: #92400e;
+            
+            --badge-paper: #dbeafe;
+            --badge-paper-text: #1e40af;
+            --badge-review: #f3e8ff;
+            --badge-review-text: #6b21a8;
+            --badge-patent: #ffedd5;
+            --badge-patent-text: #c2410c;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --surface-color: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --primary-color: #22c55e;
+            --primary-hover: #16a34a;
+            --accent-color: #fb923c;
+            --border-color: #334155;
+            --muted-bg: #334155;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+            --danger-bg: #7f1d1d;
+            --danger-text: #fca5a5;
+            --warning-bg: #78350f;
+            --warning-text: #fcd34d;
+
+            --badge-paper: #1e3a8a;
+            --badge-paper-text: #bfdbfe;
+            --badge-review: #4c1d95;
+            --badge-review-text: #e9d5ff;
+            --badge-patent: #7c2d12;
+            --badge-patent-text: #fed7aa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sticky Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-primary);
+            background-color: var(--muted-bg);
+            font-weight: 500;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header & Stats */
+        header {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background-color: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        /* Important Notes Banner */
+        .banner {
+            background-color: var(--warning-bg);
+            color: var(--warning-text);
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .banner h3 {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .banner ul {
+            margin-left: 1.5rem;
+        }
+
+        /* Section Styles */
+        section {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 80px;
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--muted-bg);
+        }
+
+        /* Controls: Search & Filter */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            background-color: var(--muted-bg);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        input, select, button {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--surface-color);
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button.secondary {
+            background-color: var(--muted-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        button.secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        button.danger {
+            background-color: var(--danger-bg);
+            color: var(--danger-text);
+            border: 1px solid var(--danger-text);
+        }
+
+        /* Toggle Views */
+        .view-toggle {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+            gap: 0.5rem;
+        }
+
+        /* Grid View */
+        .grid-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-color);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.paper { background-color: var(--badge-paper); color: var(--badge-paper-text); }
+        .badge.review { background-color: var(--badge-review); color: var(--badge-review-text); }
+        .badge.patent { background-color: var(--badge-patent); color: var(--badge-patent-text); }
+        
+        .nr-chip {
+            background-color: var(--muted-bg);
+            color: var(--text-secondary);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .card-detail {
+            font-size: 0.9rem;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 0.5rem;
+        }
+        
+        .card-detail span:first-child {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Table View */
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 1200px;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--muted-bg);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background-color: var(--muted-bg);
+            cursor: pointer;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal {
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background-color: var(--surface-color);
+            z-index: 10;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .modal-close:hover {
+            color: var(--danger-text);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .data-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .data-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        
+        .data-value {
+            font-size: 1rem;
+        }
+
+        /* Compare Section */
+        .compare-selector {
+            margin-bottom: 1rem;
+        }
+        
+        .compare-table-wrapper {
+            overflow-x: auto;
+        }
+
+        .compare-table th:first-child {
+            position: sticky;
+            left: 0;
+            background-color: var(--surface-color);
+            z-index: 1;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        }
+        
+        /* Checkbox styling for compare */
+        .compare-checkbox {
+            width: 1.2rem;
+            height: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Charts */
+        .chart-container {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .chart-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        .chart-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--muted-bg);
+            padding-bottom: 0.5rem;
+        }
+        .chart-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            gap: 0.5rem;
+        }
+        .chart-label {
+            width: 100px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chart-bar-container {
+            flex: 1;
+            background-color: var(--muted-bg);
+            border-radius: 4px;
+            height: 24px;
+            position: relative;
+        }
+        .chart-bar {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 4px;
+            transition: width 0.5s ease-in-out;
+            min-width: 2px;
+        }
+        .chart-value {
+            position: absolute;
+            right: 8px;
+            top: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Accordion for definitions */
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 1rem;
+            background-color: var(--muted-bg);
+            border: none;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .accordion-content {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-content {
+            padding: 1rem;
+            max-height: 500px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* simple mobile nav */
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="font-weight: 700; color: var(--primary-color);">NF Insulator DB</div>
+        <div class="nav-links">
+            <a href="#overview">Overview</a>
+            <a href="#database">Database</a>
+            <a href="#compare">Compare Table</a>
+            <a href="#visual-compare">Visual Compare</a>
+            <a href="#test-data">Your Test Data</a>
+            <a href="#sources">Sources</a>
+            <a href="#definitions">Definitions</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle">🌓 Theme</button>
+    </nav>
+
+    <div class="container">
+        
+        <header id="overview">
+            <h1>Natural-Fiber Insulator Literature Database</h1>
+            <p style="font-size: 1.1rem; color: var(--text-secondary);">A reference site to compare published research and patent formulations against experimental test results.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="statTotal">17</h3>
+                    <p>Total Entries</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="statPapers">12</h3>
+                    <p>Papers / Reviews</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="statPatents">5</h3>
+                    <p>Patents</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="banner">
+            <h3>⚠️ IMPORTANT NOTES</h3>
+            <ul>
+                <li><strong>NR</strong> means Not Reported. Do not convert NR to zero.</li>
+                <li>Values from different standards, frequencies, temperatures, humidity and specimen geometries should not be directly ranked.</li>
+                <li><strong>Electrical caution:</strong> applied voltage and leakage current are frequently absent from natural-fiber composite papers. Breakdown strength, dielectric constant and resistance are different measurements.</li>
+                <li><strong>Patent caution:</strong> patent examples describe claimed/prepared formulations; they are not automatically validated as high-voltage insulators.</li>
+                <li><strong>Best use:</strong> use the Literature Database as the baseline. Enter your own specimen measurements in "Your Test Data", then compare matched conditions.</li>
+            </ul>
+        </div>
+
+        <section id="database">
+            <h2>Literature Database</h2>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <label for="search">Search</label>
+                    <input type="text" id="search" placeholder="Search keywords...">
+                </div>
+                <div class="control-group">
+                    <label for="filterType">Source Type</label>
+                    <select id="filterType">
+                        <option value="all">All Types</option>
+                        <option value="Research Paper">Research Paper</option>
+                        <option value="Review">Review</option>
+                        <option value="Patent">Patent</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="filterFiber">Natural Fiber</label>
+                    <select id="filterFiber">
+                        <option value="all">All Fibers</option>
+                        <option value="sisal">Sisal</option>
+                        <option value="bamboo">Bamboo</option>
+                        <option value="palm">Palm</option>
+                        <option value="pineapple">Pineapple</option>
+                        <option value="coir">Coir / Coconut</option>
+                        <option value="banana">Banana</option>
+                        <option value="flax">Flax</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="sortData">Sort By</label>
+                    <select id="sortData">
+                        <option value="year-desc">Year (Newest)</option>
+                        <option value="year-asc">Year (Oldest)</option>
+                        <option value="title-asc">Title (A-Z)</option>
+                    </select>
+                </div>
+                <div class="control-group" style="justify-content: flex-end;">
+                    <button class="secondary" id="resetFilters">Reset Filters</button>
+                </div>
+            </div>
+
+            <div class="view-toggle">
+                <span style="align-self: center; margin-right: auto; font-weight: 500;" id="resultCount">Showing 17 results</span>
+                <button class="secondary" id="btnGrid">Grid View</button>
+                <button class="secondary" id="btnTable">Table View</button>
+            </div>
+
+            <div id="gridView" class="grid-view"></div>
+            
+            <div id="tableView" class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Compare</th>
+                            <th>Type</th>
+                            <th>Year</th>
+                            <th>Title</th>
+                            <th>Fiber</th>
+                            <th>Matrix</th>
+                            <th>Dielectric Strength</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="compare">
+            <h2>Compare Tool</h2>
+            <div class="banner" style="background-color: var(--danger-bg); color: var(--danger-text); border-left-color: var(--danger-text); margin-bottom: 1rem; padding: 1rem;">
+                <strong>Warning:</strong> Values under different test conditions must not be ranked directly.
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                Select 2 to 4 entries using the checkboxes in the Database table or grid to compare them here.
+                <button class="secondary" style="margin-left: 1rem;" id="clearCompareBtn">Clear Selection</button>
+            </div>
+
+            <div class="compare-table-wrapper">
+                <table class="compare-table" id="compareTable">
+                    <thead>
+                        <tr id="compareHeaders">
+                            <th>Field</th>
+                            <!-- Dynamic headers injected here -->
+                        </tr>
+                    </thead>
+                    <tbody id="compareBody">
+                        <!-- Dynamic rows injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section id="visual-compare">
+            <h2>Visual Comparison</h2>
+            <p style="margin-bottom: 1rem; color: var(--text-secondary);">Select items in the Database or Your Test Data to see numerical fields compared graphically.</p>
+            <div id="compareCharts" class="chart-container"></div>
+        </section>
+
+        <section id="test-data">
+            <h2>Your Test Data</h2>
+            <p style="margin-bottom: 1rem; color: var(--text-secondary);">Enter your fabricated specimen test results to compare against the literature. Data is saved locally in your browser.</p>
+            
+            <form id="testDataForm">
+                <div class="form-grid">
+                    <div class="control-group">
+                        <label>Specimen ID *</label>
+                        <input type="text" id="td-id" required>
+                    </div>
+                    <div class="control-group">
+                        <label>Natural Fiber *</label>
+                        <input type="text" id="td-fiber" required>
+                    </div>
+                    <div class="control-group">
+                        <label>Fiber Batch / Source</label>
+                        <input type="text" id="td-batch">
+                    </div>
+                    <div class="control-group">
+                        <label>Resin Matrix *</label>
+                        <input type="text" id="td-resin" required>
+                    </div>
+                    <div class="control-group">
+                        <label>Fiber Percentage</label>
+                        <input type="text" id="td-percent">
+                    </div>
+                    <div class="control-group">
+                        <label>Chemical Treatment</label>
+                        <input type="text" id="td-treatment">
+                    </div>
+                    <div class="control-group">
+                        <label>Nano Material</label>
+                        <input type="text" id="td-nano">
+                    </div>
+                    <div class="control-group">
+                        <label>Dielectric Strength</label>
+                        <input type="text" id="td-dielectric">
+                    </div>
+                    <div class="control-group">
+                        <label>Applied Voltage</label>
+                        <input type="text" id="td-voltage">
+                    </div>
+                    <div class="control-group">
+                        <label>Leakage Current</label>
+                        <input type="text" id="td-leakage">
+                    </div>
+                    <div class="control-group">
+                        <label>Mechanical Strength</label>
+                        <input type="text" id="td-mechanical">
+                    </div>
+                    <div class="control-group">
+                        <label>Water Absorption</label>
+                        <input type="text" id="td-water">
+                    </div>
+                    <div class="control-group">
+                        <label>Temperature</label>
+                        <input type="text" id="td-temp">
+                    </div>
+                    <div class="control-group">
+                        <label>Humidity</label>
+                        <input type="text" id="td-humidity">
+                    </div>
+                    <div class="control-group">
+                        <label>Pollution Level</label>
+                        <input type="text" id="td-pollution">
+                    </div>
+                    <div class="control-group">
+                        <label>Test Standard</label>
+                        <input type="text" id="td-standard">
+                    </div>
+                    <div class="control-group">
+                        <label>Test Instrument</label>
+                        <input type="text" id="td-instrument">
+                    </div>
+                    <div class="control-group">
+                        <label>Test Date</label>
+                        <input type="date" id="td-date">
+                    </div>
+                    <div class="control-group" style="grid-column: 1 / -1;">
+                        <label>Remarks / Key Results</label>
+                        <input type="text" id="td-remarks">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Save Specimen</button>
+                    <button type="button" class="secondary" id="exportCsvBtn">Export CSV</button>
+                    <button type="button" class="secondary" onclick="document.getElementById('importCsv').click()">Import CSV</button>
+                    <input type="file" id="importCsv" accept=".csv" style="display:none">
+                </div>
+            </form>
+
+            <div class="table-container" style="display: block;">
+                <table id="testDataTable">
+                    <thead>
+                        <tr>
+                            <th>Compare</th>
+                            <th>Specimen ID</th>
+                            <th>Date</th>
+                            <th>Fiber</th>
+                            <th>Matrix</th>
+                            <th>Dielectric Strength</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="testDataBody">
+                        <!-- User data injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="sources">
+            <h2>Sources</h2>
+            <ol id="sourcesList" style="margin-left: 2rem; line-height: 1.8;"></ol>
+        </section>
+
+        <section id="definitions">
+            <h2>Data Definitions</h2>
+            <div id="definitionsAccordion"></div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Data compiled from published literature and patents. Verify against the original source before use.</p>
+    </footer>
+
+    <!-- Modal Template -->
+    <div class="modal-overlay" id="detailModal" role="dialog" aria-modal="true">
+        <div class="modal">
+            <div class="modal-header">
+                <div>
+                    <span id="m-badge" class="badge"></span>
+                    <span id="m-year" style="color: var(--text-secondary); margin-left: 0.5rem; font-weight: 500;"></span>
+                </div>
+                <button class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2 id="m-title" style="margin-bottom: 0.5rem; border: none; padding: 0;"></h2>
+                <a id="m-link" href="#" target="_blank" style="display: inline-block; margin-bottom: 1.5rem; word-break: break-all;"></a>
+                
+                <div class="data-grid" id="m-grid">
+                    <!-- Fields injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DATA DEFINITION ---
+        const literatureData = [
+            {
+                id: "lit-1",
+                sourceType: "Research Paper", year: "2018", title: "Sisal fibril epoxy composite—a high strength electrical insulating material",
+                naturalFiber: "Sisal (Agave sisalana) fibrils", chemicalTreatment: "Chemical treatment; NaOH treatment reported", nanoMaterial: "NR",
+                fiberPercentage: "10–35 wt%", resinMatrix: "Epoxy", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "Room-temperature testing; exact value NR",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "NR in accessible abstract",
+                mechanicalStrength: "Tensile strength: 51.99 MPa after treatment at 35 wt% (vs 47.4 MPa untreated)", testDate: "NR",
+                keyResult: "Dissipation factor reached 0.097; tests 1–10 kHz", note: "NR", sourceLink: "https://doi.org/10.1002/pc.24527"
+            },
+            {
+                id: "lit-2",
+                sourceType: "Research Paper", year: "2018", title: "Comparative analysis on dielectric properties of polymer composites reinforced with synthetic and natural fibers",
+                naturalFiber: "Bamboo", chemicalTreatment: "Chemical treatment; treated and untreated fibers compared", nanoMaterial: "NR",
+                fiberPercentage: "Different fiber loadings; exact values not stated in accessible abstract", resinMatrix: "Epoxy", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "Room temperature",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "Dielectric constant studied; exact breakdown strength NR",
+                mechanicalStrength: "NR in accessible abstract", testDate: "NR",
+                keyResult: "Dielectric properties increased with fiber loading; treated fibers showed lower dielectric properties due to reduced hydrophilicity", note: "NR", sourceLink: "https://doi.org/10.1002/vnl.21639"
+            },
+            {
+                id: "lit-3",
+                sourceType: "Research Paper", year: "2024", title: "Optimizing dielectric constants of epoxy composites infused with Palmyra palm and nano fillers",
+                naturalFiber: "Palmyra palm fruit fiber", chemicalTreatment: "5% NaOH, 30 min; neutralized with 3% HCl", nanoMaterial: "h-BN (~60 nm), Al2O3 (~20–30 nm), MWCNT (~10–30 nm)",
+                fiberPercentage: "1–3 wt% fiber in optimization; optimum reported at 3 wt%", resinMatrix: "Epoxy LY556 + PA HY951 hardener; 10:1 resin:hardener", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "Room-temperature cure; electrical test conditions vary",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "Dielectric constant K = 1.05 at optimum formulation; breakdown strength NR",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Optimum: 3 wt% palm fiber + 150 µm mesh + 1 wt% h-BN; K = 1.05", note: "NR", sourceLink: "https://doi.org/10.1016/j.heliyon.2024.e39657"
+            },
+            {
+                id: "lit-4",
+                sourceType: "Research Paper", year: "2025", title: "Surface analysis of pineapple leaves pulp-based dielectric composite material and its dielectric performance",
+                naturalFiber: "Pineapple leaf cellulose pulp", chemicalTreatment: "Soda pulping; removes lignin/hemicellulose", nanoMaterial: "NR",
+                fiberPercentage: "Exact fiber percentage NR", resinMatrix: "Epoxy + hardener", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "Room-temperature cure for 24 h",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "Permittivity = 3.27 at G-band; breakdown strength NR",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Cellulose content 59%; permittivity measured at 3.95–5.85 GHz", note: "NR", sourceLink: "https://doi.org/10.1016/j.nxmate.2025.100706"
+            },
+            {
+                id: "lit-5",
+                sourceType: "Research Paper", year: "2010", title: "Insulation Characteristics of Sisal, Human Hair, Coir, Banana Fiber Composites at Cryogenic Temperatures",
+                naturalFiber: "Coir; sisal; banana; human hair", chemicalTreatment: "NR", nanoMaterial: "NR",
+                fiberPercentage: "Composite laminates; exact fiber/matrix ratio NR", resinMatrix: "Composite laminate; exact matrix NR in accessible record", appliedVoltage: "Breakdown test voltage; exact applied voltage NR", leakageCurrent: "NR", temperature: "300 K and 77 K",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "Room-temperature breakdown: coir 52.92 kV/cm (5.292 kV/mm); sisal 22.93 kV/cm (2.293 kV/mm); banana 20.31 kV/cm (2.031 kV/mm); human hair 18.16 kV/cm (1.816 kV/mm). Cryogenic values also reported.",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Study specifically compared breakdown strength at 300 K and 77 K.", note: "NR", sourceLink: "https://doi.org/10.1177/204124791000100104"
+            },
+            {
+                id: "lit-6",
+                sourceType: "Research Paper", year: "2023", title: "Investigation of electrical resistance on coir fiber reinforced P-PVC composites",
+                naturalFiber: "Coir fiber", chemicalTreatment: "Triethoxy(ethyl) silane / NaOH / KOH treatments compared", nanoMaterial: "NR",
+                fiberPercentage: "2, 4, 6 wt%", resinMatrix: "Plasticized PVC", appliedVoltage: "NR", leakageCurrent: "Direct leakage current NR; electrical resistance reported", temperature: "NR",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "Dielectric constant 2.3–3.4 in cited comparative literature; this study focused on resistance",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Electrical resistance optimum = 274.47 GΩ at 2 wt% coir, 208.33 µm, silane treatment", note: "DOE/Box–Behnken optimization; good insulating resistance reported", sourceLink: "https://doi.org/10.1080/1023666X.2023.2250616"
+            },
+            {
+                id: "lit-7",
+                sourceType: "Research Paper", year: "2026", title: "Investigation on the mechanical behavior of coconut leaf sheath and midrib of coconut leaf reinforced epoxy composites",
+                naturalFiber: "Coconut leaf sheath / midrib", chemicalTreatment: "Alkali/chemical treatment studied", nanoMaterial: "NR",
+                fiberPercentage: "10–25 wt% in water-absorption discussion", resinMatrix: "Epoxy", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "NR",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "Water absorption after 48 h: 7.0% at 10% fiber; 16.2% at 15%; 17.7% at 25%", dielectricStrength: "Electrical breakdown strength NR",
+                mechanicalStrength: "Mechanical properties studied; exact selected values vary by formulation", testDate: "NR",
+                keyResult: "Water absorption increased with fiber loading due to hydrophilic fiber and possible microvoids", note: "NR", sourceLink: "https://doi.org/10.1038/s41598-026-44575-5"
+            },
+            {
+                id: "lit-8",
+                sourceType: "Review", year: "2024", title: "Coconut (Cocos nucifera) sheath-based polymeric composites – A review",
+                naturalFiber: "Coconut leaf sheath", chemicalTreatment: "5% NaOH and other treatments summarized", nanoMaterial: "Some hybrid systems use 2 wt% organomodified MMT clay",
+                fiberPercentage: "Examples: 25:75, 30:70, 35:65; other systems vary", resinMatrix: "Epoxy, phenol-formaldehyde, polyester and others", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "NR",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR in review table for these mechanical-focused studies", dielectricStrength: "Example epoxy 30:70 alkali-treated: tensile 26.4 MPa; bending 17.23 MPa; impact 10.2 kJ/m²; water absorption 3.7%",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Review compiles mechanical/physical data from multiple studies; values must be tied to the cited reference before experimental comparison.", note: "NR", sourceLink: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11337133/"
+            },
+            {
+                id: "lit-9",
+                sourceType: "Research Paper", year: "2020", title: "Physical and thermal behaviour of areca and coconut shell powder reinforced epoxy composites",
+                naturalFiber: "Areca shell powder + coconut shell powder", chemicalTreatment: "NR", nanoMaterial: "NR",
+                fiberPercentage: "10–40 wt% total filler", resinMatrix: "Epoxy", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "Temperature-dependent properties studied; exact test temperatures NR",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "Water absorption increased with fiber loading; exact values not in accessible abstract", dielectricStrength: "Dielectric strength NR",
+                mechanicalStrength: "NR in accessible abstract", testDate: "NR",
+                keyResult: "Study focused on density, water absorption, thermal conductivity, specific heat and diffusivity.", note: "NR", sourceLink: "https://doi.org/10.1016/j.matpr.2020.02.282"
+            },
+            {
+                id: "lit-10",
+                sourceType: "Research Paper", year: "2022", title: "Investigation of electrical resistance and dielectric constant of Boron Nitride and Banana fiber reinforced epoxy polymer matrix composite",
+                naturalFiber: "Banana fiber", chemicalTreatment: "NR", nanoMaterial: "Boron nitride (BN)",
+                fiberPercentage: "NR", resinMatrix: "Epoxy", appliedVoltage: "NR", leakageCurrent: "Electrical resistance studied; leakage current NR", temperature: "Temperature effects discussed; exact test temperature NR",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "Dielectric constant reported as 1.143 in comparative literature table",
+                mechanicalStrength: "NR in accessible abstract", testDate: "NR",
+                keyResult: "Useful reference for banana-fiber/BN/epoxy electrical comparison.", note: "NR", sourceLink: "https://doi.org/10.1177/09673911221122328"
+            },
+            {
+                id: "lit-11",
+                sourceType: "Research Paper", year: "2024", title: "Dielectric and chemical characteristics of nano-cellulose banana fiber epoxy composites for high voltage applications in power systems",
+                naturalFiber: "Banana leaf and pseudostem fiber", chemicalTreatment: "Nanocellulose processing", nanoMaterial: "Nano-cellulose",
+                fiberPercentage: "Critical fiber volume reported at 17.2%", resinMatrix: "Epoxy", appliedVoltage: "High-voltage application study; exact applied voltage NR", leakageCurrent: "NR", temperature: "NR",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "Dielectric constant, dissipation factor and loss factor studied; exact breakdown strength NR",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Banana leaf-fiber composites showed improved dielectric properties relative to pure epoxy; maximum dielectric constant at critical fiber volume 17.2%.", note: "NR", sourceLink: "https://doi.org/10.30955/gnj.06443"
+            },
+            {
+                id: "lit-12",
+                sourceType: "Research Paper", year: "2024", title: "Effect of Interfacial Bonding Characteristics on Electrical Properties of Natural Fiber Reinforced Polymeric Matrix Composite",
+                naturalFiber: "Multiple natural fibers including cotton, flax, hemp, jute, sisal and banana", chemicalTreatment: "Interfacial treatment/modification discussed", nanoMaterial: "NR",
+                fiberPercentage: "NR", resinMatrix: "Polymeric matrices", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "NR",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "Reported reference ranges for natural fibers: cotton 70–200 kV/mm; flax 45–80; hemp 45–80; jute 50–150; sisal 10–20; banana 40–80 kV/mm",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Values are fiber-level reference data, not necessarily finished insulator composite data.", note: "NR", sourceLink: "ResearchGate record / paper title"
+            },
+            {
+                id: "lit-13",
+                sourceType: "Patent", year: "2020", title: "CN112063115A – Preparation method of natural coconut fiber reinforced epoxy resin composite fabric",
+                naturalFiber: "Coconut/coir fiber", chemicalTreatment: "No specific chemical treatment in core example; epoxy encapsulation used to reduce hygroscopicity", nanoMaterial: "NR",
+                fiberPercentage: "5–20 wt% fiber in epoxy", resinMatrix: "Epoxy resin", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "Room-temperature curing",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "NR",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Claims improved elastic modulus, tensile strength and epoxy elongation; numerical mechanical values not provided in accessible patent text", note: "Fiber length 0.5–5 cm; mixed 10–20 min; cured at room temperature.", sourceLink: "https://patents.google.com/patent/CN112063115A/en"
+            },
+            {
+                id: "lit-14",
+                sourceType: "Patent", year: "2022", title: "CN114656751A – Light insulating plant fiber composite material",
+                naturalFiber: "Coconut stalk fiber", chemicalTreatment: "5% NaOH, 6 h; washed; dried 80 °C for 3 h", nanoMaterial: "NR",
+                fiberPercentage: "30 wt%", resinMatrix: "Epoxy + phthalic anhydride + BDMA; 100:80:1", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "Processing at 40 °C; drying at 80 °C",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "Electrical insulation application claimed; numerical dielectric strength NR",
+                mechanicalStrength: "NR in accessible patent example", testDate: "NR",
+                keyResult: "NR", note: "Short fiber 2–3 cm; 100×100×2 mm sheet; compression molding.", sourceLink: "https://patents.google.com/patent/CN114656751A/en"
+            },
+            {
+                id: "lit-15",
+                sourceType: "Patent", year: "2019", title: "CN109233206A – Plant fiber/epoxy resin composite material with graphite oxide modification",
+                naturalFiber: "Coir and flax-type plant fiber", chemicalTreatment: "Polyethyleneimine surface modification", nanoMaterial: "Graphite oxide microplates, 50–100 nm thick",
+                fiberPercentage: "Modified plant fiber 5–15 wt%; preferred 10 wt%", resinMatrix: "Epoxy resin; resin:curing agent 2:1–3:1", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "NR",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "NR",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Mechanics-focused patent; numerical mechanical values not available in accessible summary", note: "Claims reduced polarity/hydrophilicity through PEI + graphite oxide surface layer.", sourceLink: "https://patents.google.com/patent/CN109233206A/en"
+            },
+            {
+                id: "lit-16",
+                sourceType: "Patent", year: "2014", title: "EP2821226A1 – Composite material containing plant fibre fabrics and preparation method",
+                naturalFiber: "Plant fiber textile / felt", chemicalTreatment: "Coupling agent + fire retardant surface pretreatment", nanoMaterial: "Microcapsule foaming agent; biomass/rosin epoxy system",
+                fiberPercentage: "Plant-fiber felt; exact wt% varies; foam agent 5–15 wt% in epoxy powder", resinMatrix: "Biomass rosin-based epoxy resin", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "Processing 100–180 °C",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "NR",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Mechanical/acoustic/foam composite claims; numerical mechanical strength NR in accessible summary", note: "Plant fiber felt thickness 0.1–5 mm; microcapsules 5–50 µm.", sourceLink: "https://patents.google.com/patent/EP2821226A1/en"
+            },
+            {
+                id: "lit-17",
+                sourceType: "Patent", year: "2020", title: "US10711394B2 – Composite having plant fiber textile and fabricating method",
+                naturalFiber: "Sisal / flax and other plant fiber textiles", chemicalTreatment: "Potassium permanganate coupling treatment and/or fire retardant", nanoMaterial: "Biomass resin system; no nano-filler required",
+                fiberPercentage: "40–60 wt% plant fibers", resinMatrix: "Biomass rosin epoxy / epoxy resin", appliedVoltage: "NR", leakageCurrent: "NR", temperature: "Elevated-temperature fabrication",
+                humidity: "NR", pollutionLevel: "NR", waterAbsorption: "NR", dielectricStrength: "NR",
+                mechanicalStrength: "NR", testDate: "NR",
+                keyResult: "Mechanical/functional laminate; numerical strength not in accessible summary", note: "Describes environmentally friendly plant-fiber hybrid laminates.", sourceLink: "https://patents.google.com/patent/US10711394B2/en"
+            }
+        ];
+
+        const definitions = [
+            { term: "NR", desc: "Not Reported in the accessible source; do not treat as zero." },
+            { term: "Natural fiber used", desc: "Exact natural reinforcement used in the reported study/patent." },
+            { term: "Chemical treatment", desc: "Pretreatment or surface modification of the natural fiber." },
+            { term: "Nano-coating / nano-material", desc: "Nano-scale coating, filler or nanocellulose used." },
+            { term: "Fiber percentage", desc: "Reported wt% or volume% of fiber; preserve the source's basis." },
+            { term: "Applied voltage", desc: "Voltage actually applied during the electrical test. Do not substitute rated system voltage." },
+            { term: "Leakage current", desc: "Measured current through/on the insulation during the test. Do not substitute dielectric loss/current from another test." },
+            { term: "Temperature", desc: "Temperature during the relevant electrical/physical test." },
+            { term: "Humidity", desc: "Relative humidity during the test, if reported." },
+            { term: "Pollution level", desc: "Pollution severity/conductivity/ESDD/NSDD or equivalent test condition, if reported." },
+            { term: "Water absorption", desc: "Reported water uptake, usually percentage by mass; compare only when test duration/standard is similar." },
+            { term: "Dielectric strength", desc: "Breakdown strength. Check units carefully: 1 kV/cm = 0.1 kV/mm." },
+            { term: "Mechanical strength", desc: "Prefer tensile/flexural/compressive strength with units and test standard." },
+            { term: "Test date", desc: "Actual test date. Most literature does not report it; publication year is not a test date." },
+            { term: "Key reported result / note", desc: "Important context needed before comparing the row with your own specimen." }
+        ];
+        
+        const allFields = [
+            "sourceType", "year", "title", "naturalFiber", "chemicalTreatment", 
+            "nanoMaterial", "fiberPercentage", "resinMatrix", "appliedVoltage", 
+            "leakageCurrent", "temperature", "humidity", "pollutionLevel", 
+            "waterAbsorption", "dielectricStrength", "mechanicalStrength", 
+            "testDate", "keyResult", "note"
+        ];
+        
+        const allFieldsLabels = {
+            sourceType: "Type", year: "Year", title: "Title", naturalFiber: "Natural Fiber", 
+            chemicalTreatment: "Treatment", nanoMaterial: "Nano Material", fiberPercentage: "Fiber %", 
+            resinMatrix: "Matrix", appliedVoltage: "Applied Voltage", leakageCurrent: "Leakage Current", 
+            temperature: "Temperature", humidity: "Humidity", pollutionLevel: "Pollution Level", 
+            waterAbsorption: "Water Absorption", dielectricStrength: "Dielectric Strength", 
+            mechanicalStrength: "Mechanical Strength", testDate: "Test Date", keyResult: "Key Result", note: "Additional Note"
+        };
+
+        // State
+        let userData = [];
+        let compareSet = new Set();
+
+        // --- 2. INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            loadUserData();
+            renderLiterature();
+            renderSources();
+            renderDefinitions();
+            setupEventListeners();
+        });
+
+        // --- 3. CORE LOGIC ---
+        
+        function formatVal(val) {
+            if (!val || val === "NR" || val.trim() === "") return `<span class="nr-chip">NR</span>`;
+            return val;
+        }
+        
+        function getBadgeClass(type) {
+            if (type.includes("Paper")) return "paper";
+            if (type.includes("Review")) return "review";
+            if (type.includes("Patent")) return "patent";
+            return "paper";
+        }
+
+        function renderLiterature() {
+            const grid = document.getElementById('gridView');
+            const tbody = document.getElementById('tableBody');
+            grid.innerHTML = '';
+            tbody.innerHTML = '';
+            
+            // Filter & Sort
+            const sTerm = document.getElementById('search').value.toLowerCase();
+            const fType = document.getElementById('filterType').value;
+            const fFiber = document.getElementById('filterFiber').value;
+            const sortVal = document.getElementById('sortData').value;
+            
+            let filtered = literatureData.filter(item => {
+                const matchSearch = Object.values(item).some(val => String(val).toLowerCase().includes(sTerm));
+                const matchType = fType === 'all' || item.sourceType.includes(fType);
+                const matchFiber = fFiber === 'all' || item.naturalFiber.toLowerCase().includes(fFiber);
+                return matchSearch && matchType && matchFiber;
+            });
+            
+            filtered.sort((a, b) => {
+                if (sortVal === 'year-desc') return parseInt(b.year) - parseInt(a.year);
+                if (sortVal === 'year-asc') return parseInt(a.year) - parseInt(b.year);
+                if (sortVal === 'title-asc') return a.title.localeCompare(b.title);
+            });
+            
+            document.getElementById('resultCount').textContent = `Showing ${filtered.length} results`;
+
+            filtered.forEach(item => {
+                const badgeClass = getBadgeClass(item.sourceType);
+                const isChecked = compareSet.has(item.id) ? 'checked' : '';
+                
+                // Grid Card
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="badge ${badgeClass}">${item.sourceType}</span>
+                        <span style="font-weight: 500; color: var(--text-secondary);">${item.year}</span>
+                    </div>
+                    <div class="card-title">${item.title}</div>
+                    <div class="card-detail"><span>Fiber</span> <span>${formatVal(item.naturalFiber)}</span></div>
+                    <div class="card-detail"><span>Matrix</span> <span>${formatVal(item.resinMatrix)}</span></div>
+                    <div class="card-detail" style="margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-color);">
+                        <span>Result</span> <span style="font-weight: 500;">${formatVal(item.keyResult)}</span>
+                    </div>
+                    <div style="margin-top: 0.5rem;" onclick="event.stopPropagation()">
+                        <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                            <input type="checkbox" class="compare-checkbox" value="${item.id}" ${isChecked} onchange="toggleCompare('${item.id}', this.checked)">
+                            <span style="font-size: 0.9rem;">Select for Compare</span>
+                        </label>
+                    </div>
+                `;
+                card.addEventListener('click', (e) => {
+                    if (e.target.type !== 'checkbox') openModal(item);
+                });
+                grid.appendChild(card);
+
+                // Table Row
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td onclick="event.stopPropagation()">
+                        <input type="checkbox" class="compare-checkbox" value="${item.id}" ${isChecked} onchange="toggleCompare('${item.id}', this.checked)">
+                    </td>
+                    <td><span class="badge ${badgeClass}">${item.sourceType}</span></td>
+                    <td>${item.year}</td>
+                    <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.title}</td>
+                    <td>${formatVal(item.naturalFiber)}</td>
+                    <td>${formatVal(item.resinMatrix)}</td>
+                    <td>${formatVal(item.dielectricStrength)}</td>
+                `;
+                tr.addEventListener('click', () => openModal(item));
+                tbody.appendChild(tr);
+            });
+            
+            updateCompareTable();
+        }
+
+        // --- 4. MODAL LOGIC ---
+        function openModal(item) {
+            const modal = document.getElementById('detailModal');
+            document.getElementById('m-badge').className = `badge ${getBadgeClass(item.sourceType)}`;
+            document.getElementById('m-badge').textContent = item.sourceType;
+            document.getElementById('m-year').textContent = item.year;
+            document.getElementById('m-title').textContent = item.title;
+            
+            const linkEl = document.getElementById('m-link');
+            if (item.sourceLink.startsWith('http')) {
+                linkEl.href = item.sourceLink;
+                linkEl.textContent = item.sourceLink;
+                linkEl.style.display = 'inline-block';
+            } else {
+                linkEl.style.display = 'none';
+            }
+
+            const grid = document.getElementById('m-grid');
+            grid.innerHTML = '';
+            allFields.forEach(f => {
+                if (f === 'sourceType' || f === 'year' || f === 'title' || f === 'sourceLink') return;
+                let val = item[f];
+                if (!val || val === "NR" || val === "") val = `<span class="nr-chip">NR</span>`;
+                
+                grid.innerHTML += `
+                    <div class="data-item">
+                        <span class="data-label">${allFieldsLabels[f]}</span>
+                        <span class="data-value">${val}</span>
+                    </div>
+                `;
+            });
+
+            modal.style.display = 'flex';
+        }
+
+        // --- 5. COMPARE LOGIC ---
+        function toggleCompare(id, checked) {
+            if (checked) {
+                if (compareSet.size >= 4) {
+                    alert("You can compare up to 4 items at a time.");
+                    event.target.checked = false;
+                    return;
+                }
+                compareSet.add(id);
+            } else {
+                compareSet.delete(id);
+            }
+            renderLiterature(); // Re-render to sync checkboxes
+            renderUserData();   // Sync checkboxes in user table
+        }
+
+        function updateCompareTable() {
+            const headers = document.getElementById('compareHeaders');
+            const body = document.getElementById('compareBody');
+            
+            // clear dynamic cols
+            while(headers.children.length > 1) headers.removeChild(headers.lastChild);
+            body.innerHTML = '';
+            
+            if (compareSet.size === 0) {
+                body.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 2rem;">Select items from the Database or Your Test Data to compare.</td></tr>';
+                renderCharts([]);
+                return;
+            }
+
+            const selectedItems = Array.from(compareSet).map(id => {
+                if (id.startsWith('lit-')) return literatureData.find(d => d.id === id);
+                if (id.startsWith('usr-')) return userData.find(d => d.id === id);
+            }).filter(Boolean);
+
+            selectedItems.forEach((item, i) => {
+                const th = document.createElement('th');
+                th.innerHTML = `Item ${i+1}<br><span style="font-size:0.8rem;font-weight:normal;color:var(--text-secondary)">${item.title || item.specimenId}</span>`;
+                headers.appendChild(th);
+            });
+
+            // Fields to compare
+            const compareFields = [
+                {k: 'naturalFiber', l: 'Natural Fiber', uk: 'fiber'},
+                {k: 'resinMatrix', l: 'Matrix', uk: 'resin'},
+                {k: 'fiberPercentage', l: 'Fiber %', uk: 'percent'},
+                {k: 'chemicalTreatment', l: 'Treatment', uk: 'treatment'},
+                {k: 'dielectricStrength', l: 'Dielectric Strength', uk: 'dielectric'},
+                {k: 'appliedVoltage', l: 'Applied Voltage', uk: 'voltage'},
+                {k: 'leakageCurrent', l: 'Leakage Current', uk: 'leakage'},
+                {k: 'mechanicalStrength', l: 'Mechanical Strength', uk: 'mechanical'},
+                {k: 'waterAbsorption', l: 'Water Absorption', uk: 'water'},
+                {k: 'temperature', l: 'Temperature', uk: 'temp'},
+                {k: 'keyResult', l: 'Key Result', uk: 'remarks'}
+            ];
+
+            compareFields.forEach(f => {
+                const tr = document.createElement('tr');
+                const tdLabel = document.createElement('td');
+                tdLabel.style.fontWeight = '600';
+                tdLabel.textContent = f.l;
+                tr.appendChild(tdLabel);
+
+                selectedItems.forEach(item => {
+                    const td = document.createElement('td');
+                    // map logic for lit vs usr
+                    let val = item.id.startsWith('lit-') ? item[f.k] : item[f.uk];
+                    td.innerHTML = formatVal(val);
+                    tr.appendChild(td);
+                });
+                body.appendChild(tr);
+            });
+
+            // Render Charts
+            renderCharts(selectedItems);
+        }
+
+        function renderCharts(selectedItems) {
+            const chartContainer = document.getElementById('compareCharts');
+            chartContainer.innerHTML = '';
+            
+            if(selectedItems.length === 0) return;
+
+            // Fields that could potentially be graphed
+            const graphFields = [
+                {k: 'dielectricStrength', l: 'Dielectric Strength', uk: 'dielectric'},
+                {k: 'mechanicalStrength', l: 'Mechanical Strength', uk: 'mechanical'},
+                {k: 'leakageCurrent', l: 'Leakage Current', uk: 'leakage'},
+                {k: 'waterAbsorption', l: 'Water Absorption', uk: 'water'},
+                {k: 'fiberPercentage', l: 'Fiber %', uk: 'percent'}
+            ];
+
+            // Extract numeric values from strings (e.g. "52.92 kV/cm" -> 52.92)
+            function extractNumber(str) {
+                if(!str || str === 'NR') return null;
+                const match = String(str).match(/-?\d+(\.\d+)?/);
+                return match ? parseFloat(match[0]) : null;
+            }
+
+            graphFields.forEach(f => {
+                let hasData = false;
+                let maxVal = 0;
+                const values = selectedItems.map(item => {
+                    const rawVal = item.id.startsWith('lit-') ? item[f.k] : item[f.uk];
+                    const num = extractNumber(rawVal);
+                    if(num !== null) {
+                        hasData = true;
+                        if(num > maxVal) maxVal = num;
+                    }
+                    return { label: item.title ? ('Lit-' + item.id.replace('lit-','')) : item.specimenId, num: num, raw: rawVal };
+                });
+
+                if(hasData && maxVal > 0) {
+                    const card = document.createElement('div');
+                    card.className = 'chart-card';
+                    
+                    const title = document.createElement('div');
+                    title.className = 'chart-title';
+                    title.textContent = f.l;
+                    card.appendChild(title);
+
+                    values.forEach(v => {
+                        const row = document.createElement('div');
+                        row.className = 'chart-row';
+                        
+                        const lbl = document.createElement('div');
+                        lbl.className = 'chart-label';
+                        lbl.textContent = v.label;
+                        lbl.title = v.label;
+
+                        const barContainer = document.createElement('div');
+                        barContainer.className = 'chart-bar-container';
+
+                        if(v.num !== null) {
+                            const pct = Math.max(2, (v.num / maxVal) * 100);
+                            const bar = document.createElement('div');
+                            bar.className = 'chart-bar';
+                            // Initial width 0 for animation, then set actual width
+                            bar.style.width = '0%';
+                            setTimeout(() => { bar.style.width = pct + '%'; }, 50);
+
+                            const valTxt = document.createElement('div');
+                            valTxt.className = 'chart-value';
+                            // If it's a known unit, maybe append it, but we don't know unit for sure.
+                            // We can just show the parsed number, or we can look at raw string.
+                            valTxt.textContent = v.num;
+
+                            barContainer.appendChild(bar);
+                            barContainer.appendChild(valTxt);
+                        } else {
+                            const valTxt = document.createElement('div');
+                            valTxt.className = 'chart-value';
+                            valTxt.style.color = 'var(--text-secondary)';
+                            valTxt.style.fontWeight = 'normal';
+                            valTxt.textContent = 'NR';
+                            barContainer.appendChild(valTxt);
+                        }
+
+                        row.appendChild(lbl);
+                        row.appendChild(barContainer);
+                        card.appendChild(row);
+                    });
+
+                    chartContainer.appendChild(card);
+                }
+            });
+        }
+
+        document.getElementById('clearCompareBtn').addEventListener('click', () => {
+            compareSet.clear();
+            renderLiterature();
+            renderUserData();
+        });
+
+        // --- 6. USER DATA LOGIC ---
+        function loadUserData() {
+            try {
+                const d = localStorage.getItem('nf_insulator_data');
+                if (d) userData = JSON.parse(d);
+                renderUserData();
+            } catch(e) { console.error("Error loading data", e); }
+        }
+        
+        function saveUserData() {
+            try {
+                localStorage.setItem('nf_insulator_data', JSON.stringify(userData));
+                renderUserData();
+                updateCompareTable();
+            } catch(e) { alert("Error saving data locally."); }
+        }
+
+        document.getElementById('testDataForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = 'usr-' + Date.now();
+            const entry = {
+                id: id,
+                specimenId: document.getElementById('td-id').value,
+                fiber: document.getElementById('td-fiber').value,
+                batch: document.getElementById('td-batch').value || 'NR',
+                resin: document.getElementById('td-resin').value,
+                percent: document.getElementById('td-percent').value || 'NR',
+                treatment: document.getElementById('td-treatment').value || 'NR',
+                nano: document.getElementById('td-nano').value || 'NR',
+                dielectric: document.getElementById('td-dielectric').value || 'NR',
+                voltage: document.getElementById('td-voltage').value || 'NR',
+                leakage: document.getElementById('td-leakage').value || 'NR',
+                mechanical: document.getElementById('td-mechanical').value || 'NR',
+                water: document.getElementById('td-water').value || 'NR',
+                temp: document.getElementById('td-temp').value || 'NR',
+                humidity: document.getElementById('td-humidity').value || 'NR',
+                pollution: document.getElementById('td-pollution').value || 'NR',
+                standard: document.getElementById('td-standard').value || 'NR',
+                instrument: document.getElementById('td-instrument').value || 'NR',
+                date: document.getElementById('td-date').value || new Date().toISOString().split('T')[0],
+                remarks: document.getElementById('td-remarks').value || 'NR'
+            };
+            
+            userData.push(entry);
+            saveUserData();
+            e.target.reset();
+        });
+
+        function renderUserData() {
+            const tbody = document.getElementById('testDataBody');
+            tbody.innerHTML = '';
+            
+            if (userData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-secondary);">No test data added yet.</td></tr>';
+                return;
+            }
+
+            userData.forEach((item, index) => {
+                const isChecked = compareSet.has(item.id) ? 'checked' : '';
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="checkbox" class="compare-checkbox" value="${item.id}" ${isChecked} onchange="toggleCompare('${item.id}', this.checked)"></td>
+                    <td style="font-weight: 600;">${item.specimenId}</td>
+                    <td>${item.date}</td>
+                    <td>${item.fiber}</td>
+                    <td>${item.resin}</td>
+                    <td>${formatVal(item.dielectric)}</td>
+                    <td><button class="danger" style="padding: 0.2rem 0.5rem;" onclick="deleteUserData(${index})">Delete</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        
+        window.deleteUserData = function(index) {
+            if(confirm("Delete this test specimen?")) {
+                const item = userData[index];
+                compareSet.delete(item.id);
+                userData.splice(index, 1);
+                saveUserData();
+            }
+        }
+
+        // CSV Export/Import
+        document.getElementById('exportCsvBtn').addEventListener('click', () => {
+            if (userData.length === 0) return alert("No data to export");
+            const keys = Object.keys(userData[0]).filter(k => k !== 'id');
+            const csvRows = [];
+            csvRows.push(keys.join(','));
+            userData.forEach(row => {
+                csvRows.push(keys.map(k => `"${String(row[k]).replace(/"/g, '""')}"`).join(','));
+            });
+            const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'nf_insulator_test_data.csv';
+            a.click();
+        });
+
+        document.getElementById('importCsv').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const text = e.target.result;
+                const rows = text.split('\n');
+                if (rows.length < 2) return;
+                const headers = rows[0].split(',');
+                
+                let imported = 0;
+                for (let i = 1; i < rows.length; i++) {
+                    if (!rows[i].trim()) continue;
+                    // Simple CSV parser
+                    const values = rows[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)?.map(v => v.replace(/^"|"$/g, '')) || [];
+                    if (values.length > 0) {
+                        const entry = { id: 'usr-' + Date.now() + i };
+                        headers.forEach((h, j) => { entry[h.trim()] = values[j] || 'NR'; });
+                        userData.push(entry);
+                        imported++;
+                    }
+                }
+                saveUserData();
+                alert(`Imported ${imported} records successfully.`);
+                document.getElementById('importCsv').value = '';
+            };
+            reader.readAsText(file);
+        });
+
+        // --- 7. UI HELPERS ---
+        function renderSources() {
+            const list = document.getElementById('sourcesList');
+            literatureData.forEach((item, i) => {
+                const li = document.createElement('li');
+                li.style.marginBottom = "1rem";
+                let noteHtml = item.note !== "NR" ? `<br><span style="color:var(--text-secondary); font-size:0.9rem;"><strong>What it contributes:</strong> ${item.keyResult}. ${item.note}</span>` : `<br><span style="color:var(--text-secondary); font-size:0.9rem;"><strong>What it contributes:</strong> ${item.keyResult}.</span>`;
+                
+                let linkHtml = item.sourceLink.startsWith("http") ? `<br><a href="${item.sourceLink}" target="_blank" style="font-size:0.85rem; word-break:break-all;">${item.sourceLink}</a>` : `<br><span style="font-size:0.85rem; color:var(--text-secondary);">${item.sourceLink}</span>`;
+                
+                li.innerHTML = `
+                    <strong>[${item.sourceType}]</strong> (${item.year}) ${item.title}
+                    ${noteHtml}
+                    ${linkHtml}
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function renderDefinitions() {
+            const acc = document.getElementById('definitionsAccordion');
+            definitions.forEach((def, i) => {
+                const div = document.createElement('div');
+                div.className = 'accordion-item';
+                div.innerHTML = `
+                    <button class="accordion-header" onclick="this.parentElement.classList.toggle('active')">
+                        ${def.term}
+                        <span style="color: var(--text-secondary);">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>${def.desc}</p>
+                    </div>
+                `;
+                acc.appendChild(div);
+            });
+        }
+
+        function initTheme() {
+            const t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', t);
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+            });
+
+            // Filters
+            document.getElementById('search').addEventListener('input', renderLiterature);
+            document.getElementById('filterType').addEventListener('change', renderLiterature);
+            document.getElementById('filterFiber').addEventListener('change', renderLiterature);
+            document.getElementById('sortData').addEventListener('change', renderLiterature);
+            document.getElementById('resetFilters').addEventListener('click', () => {
+                document.getElementById('search').value = '';
+                document.getElementById('filterType').value = 'all';
+                document.getElementById('filterFiber').value = 'all';
+                document.getElementById('sortData').value = 'year-desc';
+                renderLiterature();
+            });
+
+            // View toggle
+            const grid = document.getElementById('gridView');
+            const table = document.getElementById('tableView');
+            const btnGrid = document.getElementById('btnGrid');
+            const btnTable = document.getElementById('btnTable');
+            
+            btnGrid.style.backgroundColor = "var(--primary-color)";
+            btnGrid.style.color = "white";
+
+            btnGrid.addEventListener('click', () => {
+                grid.style.display = 'grid';
+                table.style.display = 'none';
+                btnGrid.style.backgroundColor = "var(--primary-color)";
+                btnGrid.style.color = "white";
+                btnTable.style.backgroundColor = "var(--muted-bg)";
+                btnTable.style.color = "var(--text-primary)";
+            });
+
+            btnTable.addEventListener('click', () => {
+                grid.style.display = 'none';
+                table.style.display = 'block';
+                btnTable.style.backgroundColor = "var(--primary-color)";
+                btnTable.style.color = "white";
+                btnGrid.style.backgroundColor = "var(--muted-bg)";
+                btnGrid.style.color = "var(--text-primary)";
+            });
+
+            // Modal close
+            document.querySelector('.modal-close').addEventListener('click', () => {
+                document.getElementById('detailModal').style.display = 'none';
+            });
+            document.getElementById('detailModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('detailModal')) {
+                    document.getElementById('detailModal').style.display = 'none';
+                }
+            });
+            
+            // Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    document.getElementById('detailModal').style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
